@@ -1,0 +1,8 @@
+CXX = clang++ -fcolor-diagnostics
+LD = clang++
+AR = ar -rcs
+
+!cxx = |> ^ CXX %f^ $(CXX) $(CFLAGS) -c %f -o %o |>
+!ld = |> ^ LINK %o^ $(LD) %f -o %o $(LDFLAGS) |>
+!ar = |> ^ AR %o^ $(AR) %o %f |>
+
