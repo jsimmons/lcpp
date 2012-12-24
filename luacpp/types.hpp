@@ -39,6 +39,12 @@ namespace lua
     inline type lua_typeof<float>() { return type::NUMBER; }
     template <>
     inline type lua_typeof<double>() { return type::NUMBER; }
+    template <>
+    inline type lua_typeof<bool>() { return type::BOOLEAN; }
+    template <>
+    inline type lua_typeof<const char *>() { return type::STRING; }
+    template <>
+    inline type lua_typeof<std::string>() { return type::STRING; }
 }
 
 #endif

@@ -207,7 +207,7 @@ template <typename T> inline void push(lua_State *, T*);
         template <int N, typename... T>
         inline typename std::enable_if<N >= 1>::type make_argument_tuple(lua_State *L, std::tuple<T...> &tuple)
         {
-            check_argument<N>(L, N - 1, std::get<N - 1>(tuple));
+            check_argument<N>(L, N, std::get<N - 1>(tuple));
             make_argument_tuple<N - 1, T...>(L, tuple);
         }
 

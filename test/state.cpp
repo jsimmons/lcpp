@@ -4,7 +4,7 @@ namespace
 {
     void add(double a, double b)
     {
-        printf("%f %f\n!!!!!\n", a, b);
+        printf("%f %f!!!!!\n", a, b);
     }
 }
 int main()
@@ -50,7 +50,7 @@ int main()
     print.call("Hello, World!", "Cat Dog", 9001, &print, true);
     lua_settop(state, 0);
 
-    state.do_string("function add(a, b) print(a, b) return true, 12.2 end");
+    state.do_string("function add(a, b) print(a, b) return 10, 12.2 end");
     lua::function add;
     lua_getglobal(state, "add");
     lua::stack::get(state, -1, add);
@@ -59,7 +59,9 @@ int main()
     lua_settop(state, 0);
 
     lua::stack::push(state, ::add);
+    lua_setglobal(state, "add");
 
+    state.do_string("add('hello', 1000)");
 
     return 0;
 }
