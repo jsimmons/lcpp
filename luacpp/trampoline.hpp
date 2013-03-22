@@ -35,20 +35,6 @@ namespace lua
                 return 1;
             }
         };
-
-        template<typename R, typename...A>
-        struct trampoline<void, A...>
-        {
-            static int call(lua_State *L)
-            {
-                typedef R (*actual_fn)(A...);
-                actual_fn func = (actual_fn)(lua_touserdata(L, lua_upvalueindex(1)));
-                std::tuple<A...> tuple;
-                stack::make_argument_tuple<sizeof...(A)>(L, tuple);
-                apply_tuple(func, tuple, std::integral_constant<bool, sizeof...(A) == 0>());
-                return 0;
-            }
-        };
     }
 
     namespace stack

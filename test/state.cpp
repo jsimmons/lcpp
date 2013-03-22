@@ -2,9 +2,11 @@
 
 namespace
 {
-    void add(double a, double b)
+    // void return doesn't work.
+    int add(double a, double b)
     {
         printf("%f %f!!!!!\n", a, b);
+        return 0;
     }
 }
 int main()
