@@ -3,11 +3,7 @@ include_rules
 CFLAGS += -Wall -Wextra -std=c++11 -I. -O2 -g `pkg-config --cflags lua`
 LDFLAGS += `pkg-config --libs lua`
 
-: foreach src/*.cpp |> !cxx |> %B.o {luacpp_objects}
-: {luacpp_objects} |> !ar |> luacpp.a
-
 : foreach test/*.cpp |> !cxx |> %B_test.o {luacpp_test_objects}
 
-LDFLAGS += luacpp.a
-: foreach {luacpp_test_objects} | luacpp.a |> !ld |> %B
+: foreach {luacpp_test_objects} |> !ld |> %B
 

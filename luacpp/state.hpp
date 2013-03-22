@@ -10,7 +10,7 @@ namespace lua
     class state
     {
         public:
-            state();
+            state() : L(luaL_newstate()), owns_state(true) {}
             state(lua_State *L) : L(L), owns_state(false) {}
             state(const state &) = delete;
             state(const state &&rhs) : L(rhs.L), owns_state(rhs.owns_state) {}
@@ -20,8 +20,8 @@ namespace lua
             inline operator lua_State*() const { return this->L; }
 
             void open_libraries() { luaL_openlibs(this->L); }
-            void do_string(const char *code);
-            void do_file(const char *filename);
+            void do_string(const char *code) { luaL_dostring(this->L, code); }
+            void do_file(const char *filename) { luaL_dofile(this->L, filename); }
 
         private:
             lua_State *L;
