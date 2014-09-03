@@ -2,10 +2,14 @@
 
 namespace
 {
-    // void return doesn't work.
-    int add(double a, double b)
+    void void_add(const char* a, double b)
     {
-        printf("%f %f!!!!!\n", a, b);
+        printf("void_add(%s, %lf)!!!!!\n", a, b);
+    }
+
+    int int_add(const char* a, double b)
+    {
+        printf("int_add(%s, %lf)!!!!!\n", a, b);
         return 0;
     }
 }
@@ -60,7 +64,14 @@ int main()
     printf("sum is %f %f\n", std::get<0>(sum), std::get<1>(sum));
     lua_settop(state, 0);
 
-    lua::stack::push(state, ::add);
+    // test with void return
+    lua::stack::push(state, ::void_add);
+    lua_setglobal(state, "add");
+
+    state.do_string("add('hello', 1000)");
+
+    // test with int return
+    lua::stack::push(state, ::int_add);
     lua_setglobal(state, "add");
 
     state.do_string("add('hello', 1000)");
